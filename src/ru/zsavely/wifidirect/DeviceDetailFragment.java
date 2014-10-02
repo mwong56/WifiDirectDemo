@@ -26,6 +26,7 @@ import java.net.Socket;
 
 import ru.zsavely.wifidirect.DeviceListFragment.DeviceActionListener;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -51,7 +52,8 @@ import com.example.android.wifidirect.R;
  * A fragment that manages a particular peer and allows interaction with device
  * i.e. setting up network connection and transferring data.
  */
-public class DeviceDetailFragment extends Fragment implements ConnectionInfoListener {
+public class DeviceDetailFragment extends Fragment implements
+		ConnectionInfoListener {
 
 	public static final String IP_SERVER = "192.168.49.1";
 	public static int PORT = 8988;
@@ -60,6 +62,7 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
 	protected static final int CHOOSE_FILE_RESULT_CODE = 20;
 	private View mContentView = null;
 	private WifiP2pDevice device;
+	@SuppressWarnings("unused")
 	private WifiP2pInfo info;
 	ProgressDialog progressDialog = null;
 
@@ -68,34 +71,40 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
 		super.onActivityCreated(savedInstanceState);
 	}
 
+	@SuppressLint("InflateParams")
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 
 		mContentView = inflater.inflate(R.layout.device_detail, null);
-		mContentView.findViewById(R.id.btn_connect).setOnClickListener(new View.OnClickListener() {
+		mContentView.findViewById(R.id.btn_connect).setOnClickListener(
+				new View.OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				WifiP2pConfig config = new WifiP2pConfig();
-				config.deviceAddress = device.deviceAddress;
-				config.wps.setup = WpsInfo.PBC;
-				if (progressDialog != null && progressDialog.isShowing()) {
-					progressDialog.dismiss();
-				}
-				progressDialog = ProgressDialog.show(getActivity(), "Press back to cancel",
-						"Connecting to :" + device.deviceAddress, true, true
-						//                        new DialogInterface.OnCancelListener() {
+					@Override
+					public void onClick(View v) {
+						WifiP2pConfig config = new WifiP2pConfig();
+						config.deviceAddress = device.deviceAddress;
+						config.wps.setup = WpsInfo.PBC;
+						if (progressDialog != null
+								&& progressDialog.isShowing()) {
+							progressDialog.dismiss();
+						}
+						progressDialog = ProgressDialog.show(getActivity(),
+								"Press back to cancel", "Connecting to :"
+										+ device.deviceAddress, true, true
+						// new DialogInterface.OnCancelListener() {
 						//
-						//                            @Override
-						//                            public void onCancel(DialogInterface dialog) {
-						//                                ((DeviceActionListener) getActivity()).cancelDisconnect();
-						//                            }
-						//                        }
-				);
-				((DeviceActionListener) getActivity()).connect(config);
+						// @Override
+						// public void onCancel(DialogInterface dialog) {
+						// ((DeviceActionListener)
+						// getActivity()).cancelDisconnect();
+						// }
+						// }
+								);
+						((DeviceActionListener) getActivity()).connect(config);
 
-			}
-		});
+					}
+				});
 
 		mContentView.findViewById(R.id.btn_disconnect).setOnClickListener(
 				new View.OnClickListener() {
@@ -127,23 +136,29 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
 
 		String localIP = Utils.getLocalIPAddress();
 		// Trick to find the ip in the file /proc/net/arp
-		String client_mac_fixed = new String(device.deviceAddress).replace("99", "19");
+		String client_mac_fixed = new String(device.deviceAddress).replace(
+				"99", "19");
 		String clientIP = Utils.getIPFromMac(client_mac_fixed);
 
 		// User has picked an image. Transfer it to group owner i.e peer using
 		// FileTransferService.
 		Uri uri = data.getData();
-		TextView statusText = (TextView) mContentView.findViewById(R.id.status_text);
+		TextView statusText = (TextView) mContentView
+				.findViewById(R.id.status_text);
 		statusText.setText("Sending: " + uri);
 		Log.d(WiFiDirectActivity.TAG, "Intent----------- " + uri);
-		Intent serviceIntent = new Intent(getActivity(), FileTransferService.class);
+		Intent serviceIntent = new Intent(getActivity(),
+				FileTransferService.class);
 		serviceIntent.setAction(FileTransferService.ACTION_SEND_FILE);
-		serviceIntent.putExtra(FileTransferService.EXTRAS_FILE_PATH, uri.toString());
+		serviceIntent.putExtra(FileTransferService.EXTRAS_FILE_PATH,
+				uri.toString());
 
-		if(localIP.equals(IP_SERVER)){
-			serviceIntent.putExtra(FileTransferService.EXTRAS_ADDRESS, clientIP);
-		}else{
-			serviceIntent.putExtra(FileTransferService.EXTRAS_ADDRESS, IP_SERVER);
+		if (localIP.equals(IP_SERVER)) {
+			serviceIntent
+					.putExtra(FileTransferService.EXTRAS_ADDRESS, clientIP);
+		} else {
+			serviceIntent.putExtra(FileTransferService.EXTRAS_ADDRESS,
+					IP_SERVER);
 		}
 
 		serviceIntent.putExtra(FileTransferService.EXTRAS_PORT, PORT);
@@ -161,17 +176,20 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
 		// The owner IP is now known.
 		TextView view = (TextView) mContentView.findViewById(R.id.group_owner);
 		view.setText(getResources().getString(R.string.group_owner_text)
-				+ ((info.isGroupOwner == true) ? getResources().getString(R.string.yes)
-						: getResources().getString(R.string.no)));
+				+ ((info.isGroupOwner == true) ? getResources().getString(
+						R.string.yes) : getResources().getString(R.string.no)));
 
 		// InetAddress from WifiP2pInfo struct.
 		view = (TextView) mContentView.findViewById(R.id.device_info);
-		view.setText("Group Owner IP - " + info.groupOwnerAddress.getHostAddress());
+		view.setText("Group Owner IP - "
+				+ info.groupOwnerAddress.getHostAddress());
 
-		mContentView.findViewById(R.id.btn_start_client).setVisibility(View.VISIBLE);
+		mContentView.findViewById(R.id.btn_start_client).setVisibility(
+				View.VISIBLE);
 
-		if (!server_running){
-			new ServerAsyncTask(getActivity(), mContentView.findViewById(R.id.status_text)).execute();
+		if (!server_running) {
+			new ServerAsyncTask(getActivity(),
+					mContentView.findViewById(R.id.status_text)).execute();
 			server_running = true;
 		}
 
@@ -182,12 +200,14 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
 	/**
 	 * Updates the UI with device data
 	 * 
-	 * @param device the device to be displayed
+	 * @param device
+	 *            the device to be displayed
 	 */
 	public void showDetails(WifiP2pDevice device) {
 		this.device = device;
 		this.getView().setVisibility(View.VISIBLE);
-		TextView view = (TextView) mContentView.findViewById(R.id.device_address);
+		TextView view = (TextView) mContentView
+				.findViewById(R.id.device_address);
 		view.setText(device.deviceAddress);
 		view = (TextView) mContentView.findViewById(R.id.device_info);
 		view.setText(device.toString());
@@ -199,7 +219,8 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
 	 */
 	public void resetViews() {
 		mContentView.findViewById(R.id.btn_connect).setVisibility(View.VISIBLE);
-		TextView view = (TextView) mContentView.findViewById(R.id.device_address);
+		TextView view = (TextView) mContentView
+				.findViewById(R.id.device_address);
 		view.setText(R.string.empty);
 		view = (TextView) mContentView.findViewById(R.id.device_info);
 		view.setText(R.string.empty);
@@ -207,7 +228,8 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
 		view.setText(R.string.empty);
 		view = (TextView) mContentView.findViewById(R.id.status_text);
 		view.setText(R.string.empty);
-		mContentView.findViewById(R.id.btn_start_client).setVisibility(View.GONE);
+		mContentView.findViewById(R.id.btn_start_client).setVisibility(
+				View.GONE);
 		this.getView().setVisibility(View.GONE);
 	}
 
@@ -236,16 +258,18 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
 				Log.d(WiFiDirectActivity.TAG, "Server: Socket opened");
 				Socket client = serverSocket.accept();
 				Log.d(WiFiDirectActivity.TAG, "Server: connection done");
-				final File f = new File(Environment.getExternalStorageDirectory() + "/"
-						+ context.getPackageName() + "/wifip2pshared-" + System.currentTimeMillis()
-						+ ".jpg");
+				final File f = new File(
+						Environment.getExternalStorageDirectory() + "/"
+								+ context.getPackageName() + "/wifip2pshared-"
+								+ System.currentTimeMillis() + ".jpg");
 
 				File dirs = new File(f.getParent());
 				if (!dirs.exists())
 					dirs.mkdirs();
 				f.createNewFile();
 
-				Log.d(WiFiDirectActivity.TAG, "server: copying files " + f.toString());
+				Log.d(WiFiDirectActivity.TAG,
+						"server: copying files " + f.toString());
 				InputStream inputstream = client.getInputStream();
 				copyFile(inputstream, new FileOutputStream(f));
 				serverSocket.close();
@@ -259,6 +283,7 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
 
 		/*
 		 * (non-Javadoc)
+		 * 
 		 * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
 		 */
 		@Override
@@ -275,6 +300,7 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
 
 		/*
 		 * (non-Javadoc)
+		 * 
 		 * @see android.os.AsyncTask#onPreExecute()
 		 */
 		@Override
