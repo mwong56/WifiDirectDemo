@@ -1,4 +1,4 @@
-package com.example.android.wifidirect;
+package ru.zsavely.wifidirect;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

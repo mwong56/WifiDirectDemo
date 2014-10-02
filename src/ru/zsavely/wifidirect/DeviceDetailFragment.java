@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.wifidirect;
+package ru.zsavely.wifidirect;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,6 +23,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+import ru.zsavely.wifidirect.DeviceListFragment.DeviceActionListener;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -43,7 +45,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.android.wifidirect.DeviceListFragment.DeviceActionListener;
+import com.example.android.wifidirect.R;
 
 /**
  * A fragment that manages a particular peer and allows interaction with device

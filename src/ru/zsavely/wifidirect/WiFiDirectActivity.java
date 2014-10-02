@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package com.example.android.wifidirect;
+package ru.zsavely.wifidirect;
 
+import ru.zsavely.wifidirect.DeviceListFragment.DeviceActionListener;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -36,7 +37,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.android.wifidirect.DeviceListFragment.DeviceActionListener;
+import com.example.android.wifidirect.R;
 
 /**
  * An activity that uses WiFi Direct APIs to discover and connect with available

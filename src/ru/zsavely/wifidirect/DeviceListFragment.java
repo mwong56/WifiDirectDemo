@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.wifidirect;
+package ru.zsavely.wifidirect;
 
 import android.app.ListFragment;
 import android.app.ProgressDialog;
@@ -35,6 +35,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.android.wifidirect.R;
 
 /**
  * A ListFragment that displays available peers on discovery and requests the

@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package com.example.android.wifidirect;
+package ru.zsavely.wifidirect;
+
+import com.example.android.wifidirect.R;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
