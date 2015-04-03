@@ -164,7 +164,6 @@ public class DeviceListFragment extends ListFragment implements PeerListListener
         ((WiFiPeerListAdapter) getListAdapter()).notifyDataSetChanged();
         if (peers.size() == 0) {
             Log.d(WiFiDirectActivity.TAG, "No devices found");
-            return;
         }
 
     }

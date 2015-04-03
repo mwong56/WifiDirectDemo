@@ -66,12 +66,7 @@ public class DeviceDetailFragment extends Fragment implements
 	private WifiP2pInfo info;
 	ProgressDialog progressDialog = null;
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-	}
-
-	@SuppressLint("InflateParams")
+    @SuppressLint("InflateParams")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -136,8 +131,8 @@ public class DeviceDetailFragment extends Fragment implements
 
 		String localIP = Utils.getLocalIPAddress();
 		// Trick to find the ip in the file /proc/net/arp
-		String client_mac_fixed = new String(device.deviceAddress).replace(
-				"99", "19");
+		String client_mac_fixed = device.deviceAddress.replace(
+                "99", "19");
 		String clientIP = Utils.getIPFromMac(client_mac_fixed);
 
 		// User has picked an image. Transfer it to group owner i.e peer using
@@ -176,7 +171,7 @@ public class DeviceDetailFragment extends Fragment implements
 		// The owner IP is now known.
 		TextView view = (TextView) mContentView.findViewById(R.id.group_owner);
 		view.setText(getResources().getString(R.string.group_owner_text)
-				+ ((info.isGroupOwner == true) ? getResources().getString(
+				+ ((info.isGroupOwner) ? getResources().getString(
 						R.string.yes) : getResources().getString(R.string.no)));
 
 		// InetAddress from WifiP2pInfo struct.
