@@ -87,14 +87,6 @@ public class DeviceDetailFragment extends Fragment implements
 						progressDialog = ProgressDialog.show(getActivity(),
 								"Press back to cancel", "Connecting to :"
 										+ device.deviceAddress, true, true
-						// new DialogInterface.OnCancelListener() {
-						//
-						// @Override
-						// public void onCancel(DialogInterface dialog) {
-						// ((DeviceActionListener)
-						// getActivity()).cancelDisconnect();
-						// }
-						// }
 								);
 						((DeviceActionListener) getActivity()).connect(config);
 
