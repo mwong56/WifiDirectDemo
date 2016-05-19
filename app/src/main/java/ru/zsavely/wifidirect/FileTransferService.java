@@ -58,13 +58,14 @@ public class FileTransferService extends IntentService {
 				Log.d(WiFiDirectActivity.TAG, "Client socket - " + socket.isConnected());
 				OutputStream stream = socket.getOutputStream();
 				ContentResolver cr = context.getContentResolver();
-				InputStream is = null;
-				try {
-					is = cr.openInputStream(Uri.parse(fileUri));
-				} catch (FileNotFoundException e) {
-					Log.d(WiFiDirectActivity.TAG, e.toString());
-				}
-				DeviceDetailFragment.copyFile(is, stream);
+//				InputStream is = null;
+//				try {
+//					is = cr.openInputStream(Uri.parse(fileUri));
+//				} catch (FileNotFoundException e) {
+//					Log.d(WiFiDirectActivity.TAG, e.toString());
+//				}
+//				DeviceDetailFragment.copyFile(is, stream);
+				stream.write("Sending a test message from client to server.".getBytes());
 				Log.d(WiFiDirectActivity.TAG, "Client: Data written");
 			} catch (IOException e) {
 				Log.e(WiFiDirectActivity.TAG, e.getMessage());

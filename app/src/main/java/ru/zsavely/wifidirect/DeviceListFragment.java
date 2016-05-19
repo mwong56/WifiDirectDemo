@@ -25,6 +25,7 @@ import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager.PeerListListener;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +34,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +51,9 @@ public class DeviceListFragment extends ListFragment implements PeerListListener
     ProgressDialog progressDialog = null;
     View mContentView = null;
     private WifiP2pDevice device;
+
+
+    private static boolean isAutoConnecting = false;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -167,19 +172,15 @@ public class DeviceListFragment extends ListFragment implements PeerListListener
             Log.d(WiFiDirectActivity.TAG, "No devices found");
         }
         else {
-            for (WifiP2pDevice d : peers) {
-                WifiP2pConfig config = new WifiP2pConfig();
-                config.deviceAddress = d.deviceAddress;
-                config.wps.setup = WpsInfo.PBC;
-//                if (progressDialog != null
-//                        && progressDialog.isShowing()) {
-//                    progressDialog.dismiss();
-//                }
-//                progressDialog = ProgressDialog.show(getActivity(),
-//                        "Press back to cancel", "Connecting to :"
-//                                + device.deviceAddress, true, true
-//                );
-                ((DeviceActionListener) getActivity()).connect(config);
+            Log.d(WiFiDirectActivity.TAG, "PEERS SIZE: " +  String.valueOf(peers.size()));
+            if (!isAutoConnecting) {
+                isAutoConnecting = true;
+                for (WifiP2pDevice d : peers) {
+                    WifiP2pConfig config = new WifiP2pConfig();
+                    config.deviceAddress = d.deviceAddress;
+                    config.wps.setup = WpsInfo.PBC;
+                    ((DeviceActionListener) getActivity()).connect(config);
+                }
             }
         }
 

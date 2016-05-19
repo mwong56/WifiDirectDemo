@@ -1,2 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/Users/noahnegrey/AndroidStudioProjects/WifiDirectDemo/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="3e530c8fb16992e244992f178ac3da1a71db803f">
+        <dex dex="/Users/noahnegrey/AndroidStudioProjects/WifiDirectDemo/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_bf1ed9fe561a00b2b36da9fafa42e584a508c1fc/classes.dex" />
+    </item>
+    <item
+        jar="/Users/noahnegrey/AndroidStudioProjects/WifiDirectDemo/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="21.1.2"
+        sha1="cd2df37354664012d623c49cb247f2e0d546df84">
+        <dex dex="/Users/noahnegrey/AndroidStudioProjects/WifiDirectDemo/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_0182b99951ec4b92629d73655a9643c4a3e976e7/classes.dex" />
+    </item>
+
+</items>

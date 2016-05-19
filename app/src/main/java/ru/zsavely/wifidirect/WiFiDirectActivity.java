@@ -184,6 +184,9 @@ public class WiFiDirectActivity extends Activity implements ChannelListener, Dev
             @Override
             public void onSuccess() {
                 // WiFiDirectBroadcastReceiver will notify us. Ignore for now.
+                Toast.makeText(WiFiDirectActivity.this, "Connect Success.",
+                        Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
