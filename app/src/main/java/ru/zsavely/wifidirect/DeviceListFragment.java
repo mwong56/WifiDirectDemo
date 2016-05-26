@@ -33,10 +33,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.android.wifidirect.R;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.example.android.wifidirect.R;
 
 /**
  * A ListFragment that displays available peers on discovery and requests the
